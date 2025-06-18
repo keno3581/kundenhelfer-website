@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kundenhelfer 24/7 – AI Chatbot für deine Webseite</title>
+  <style>
+    /* Grund-Reset */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #fff6f6;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      color: #b22222;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #7a0d0d;
+    }
+    header {
+      background: #b22222;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+    }
+    nav a {
+      margin-left: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    nav a:hover {
+      color: #fff;
+    }
+    main {
+      flex: 1;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+    section {
+      margin-bottom: 60px;
+    }
+    h2 {
+      color: #b22222;
+      margin-bottom: 25px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+    /* Hero */
+    #hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #f7dede 0%, #f0a6a6 100%);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(178, 34, 34, 0.2);
+    }
+    #hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+    }
+    #hero p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #4d1f1f;
+    }
+    #hero button {
+      background-color: #b22222;
+      color: white;
+      border: none;
+      padding: 15px 35px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(178,34,34,0.4);
+      transition: background-color 0.3s ease;
+    }
+    #hero button:hover {
+      background-color: #7a0d0d;
+    }
+    /* Angebote */
+    #angebote .angebot-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      padding: 25px;
+      margin-bottom: 30px;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #angebote .angebot-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(178,34,34,0.3);
+    }
+    #angebote .angebot-card h3 {
+      color: #b22222;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+    #angebote .angebot-card p {
+      margin-bottom: 15px;
+    }
+    #angebote .angebot-card small {
+      color: #7a0d0d;
+      font-weight: 700;
+    }
+
+    /* Kontaktformular Modal */
+    #kontakt-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1500;
+      padding: 20px;
+    }
+    #kontakt-modal.active {
+      display: flex;
+    }
+    #kontakt-modal .modal-content {
+      background: white;
+      border-radius: 15px;
+      padding: 30px 40px;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(178,34,34,0.3);
+    }
+    #kontakt-modal .modal-content h3 {
+      margin-bottom: 25px;
+      color: #b22222;
+      text-align: center;
+    }
+    #kontakt-modal label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #7a0d0d;
+    }
+    #kontakt-modal input, 
+    #kontakt-modal textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border: 2px solid #b22222;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    #kontakt-modal input:focus, #kontakt-modal textarea:focus {
+      outline: none;
+      border-color: #7a0d0d;
+    }
+    #kontakt-modal button.submit-btn {
+      background: #b22222;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 700;
+      box-shadow: 0 6px 12px rgba(178,34,34,0.4);
+      transition: background-color 0.3s ease;
+    }
+    #kontakt-modal button.submit-btn:hover {
+      background: #7a0d0d;
+    }
+    #kontakt-modal .close-btn {
+      position: absolute;
+      top: 15px; right: 20px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #b22222;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: color 0.3s ease;
+    }
+    #kontakt-modal .close-btn:hover {
+      color: #7a0d0d;
+    }
+    /* Testimonials */
+    #testimonials {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff6f6;
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 30px rgba(178, 34, 34, 0.2);
+    }
+    #testimonials .testimonial-box {
+      background: white;
+      padding: 25px 30px;
+      margin-bottom: 25px;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      font-style: normal;
+      color: #4d1f1f;
+    }
+    #testimonials .testimonial-box p {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+    #testimonials .testimonial-box strong {
+      display: block;
+      font-style: italic;
+      font-weight: 600;
+      color: #b22222;
+      font-size: 1rem;
+      letter-spacing: 0.8px;
+    }
+    /* FAQ */
+    #faq {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+    .faq-item {
+      margin-bottom: 15px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+      background: white;
+      cursor: pointer;
+      user-select: none;
+      transition: box-shadow 0.3s ease;
+    }
+    .faq-item:hover {
+      box-shadow: 0 8px 25px rgba(178,34,34,0.3);
+    }
+    .faq-question {
+      background: #b22222;
+      color: white;
+      padding: 18px 25px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-question::after {
+      content: '+';
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      background: #fff6f6;
+      padding: 0 25px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #4d1f1f;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-answer.open {
+      padding: 15px 25px;
+      max-height: 400px;
+    }
+    .faq-answer.open + .faq-question::after {
+      transform: rotate(45deg);
+    }
+    /* AI Bild & Video */
+    #ai-demo {
+      max-width: 900px;
+      margin: 0 auto 80px;
+      text-align: center;
+    }
+    #ai-demo img, #ai-demo video {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(178, 34, 34, 0.25);
+      margin-bottom: 30px;
+    }
+    /* Footer */
+    footer {
+      background: #b22222;
+      color: white;
+      padding: 20px 40px;
+      text-align: center;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    /* Modal für Impressum/AGB/Datenschutz */
+    .modal-info {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+      z-index: 2000;
+    }
+    .modal-info.active {
+      display: flex;
+    }
+    .modal-info .content {
+      background: white;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: 15px;
+      padding: 30px 40px;
+      position: relative;
+      box-shadow: 0 12px 35px rgba(178, 34, 34, 0.3);
+    }
+    .modal-info .close-btn {
+      position: absolute;
+      top: 15px; right: 25px;
+      font-size: 1.8rem;
+      color: #b22222;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: color 0.3s ease;
+    }
+    .modal-info .close-btn:hover {
+      color: #7a0d0d;
+    }
+    .modal-info h3 {
+      margin-bottom: 20px;
+      color: #b22222;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+    .modal-info p, .modal-info ul {
+      margin-bottom: 15px;
+      font-size: 1rem;
+      color: #444;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+      nav a {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      #hero h1 {
+        font-size: 2rem;
+      }
+      #angebote .angebot-card {
+        max-width: 100%;
+      }
+      #testimonials, #faq, #ai-demo {
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kundenhelfer 24/7</h1>
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="#angebote">Angebote</a>
+      <a href="#testimonials">Kundenmeinungen</a>
+      <a href="#faq">FAQ</a>
+      <a href="#ai-demo">Demo</a>
+      <a href="#" id="open-impressum">Impressum</a>
+      <a href="#" id="open-agb">AGB</a>
+      <a href="#" id="open-datenschutz">Datenschutz</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="hero">
+      <h1>Automatisiere deine Kundenkommunikation mit AI!</h1>
+      <p>Der smarte AI-Chatbot für deine Webseite beantwortet Fragen zu Öffnungszeiten, Angeboten und generiert wertvolle Leads – rund um die Uhr, ganz automatisch.</p>
+      <button id="open-kontakt">Jetzt Chatbot bestellen</button>
+    </section>
+
+    <!-- Angebote -->
+    <section id="angebote">
+      <h2>Unsere Angebote</h2>
+      <div class="angebot-card" data-angebot="einmalzahlung">
+        <h3>Einmalzahlung – 449 €</h3>
+        <p>Einmalige Zahlung, voller Zugriff ohne weitere Kosten. Perfekt für kleine Unternehmen.</p>
+        <small>Preisvorteil gegenüber monatlicher Zahlung!</small>
+      </div>
+
+      <div class="angebot-card" data-angebot="monatlich">
+        <h3>Monatliche Zahlung – 50 €/Monat</h3>
+        <p>Flexibel ohne Einmalzahlung, monatlich kündbar, ideal für temporäre Projekte.</p>
+        <small>Alle Funktionen inklusive.</small>
+      </div>
+    </section>
+
+    <!-- Kundenmeinungen -->
+    <section id="testimonials">
+      <h2>Kundenmeinungen</h2>
+      <div class="testimonial-box">
+        <p>"Der Kundenhelfer 24/7 hat uns geholfen, 30% mehr Anfragen über die Webseite zu bekommen – und das ohne Mehraufwand!"</p>
+        <strong>- Lisa M., Boutique-Besitzerin</strong>
+      </div>
+      <div class="testimonial-box">
+        <p>"Endlich ein Chatbot, der wirklich alle Fragen beantwortet und sogar Termine vereinbart. Absolute Empfehlung!"</p>
+        <strong>- Michael T., Fitnessstudio-Inhaber</strong>
+      </div>
+      <div class="testimonial-box">
+        <p>"Einfach einzurichten, super Support – und meine Kunden sind happy, dass sie sofort Antworten bekommen."</p>
+        <strong>- Sabine K., Friseursalon</strong>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2>Häufige Fragen (FAQ)</h2>
+      <div class="faq-item">
+        <div class="faq-question">Wie funktioniert der AI-Chatbot?</div>
+        <div class="faq-answer">Der Chatbot nutzt modernste KI, um Kundenanfragen in Echtzeit zu beantworten – speziell zugeschnitten auf dein Unternehmen.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Kann ich den Chatbot an meine Webseite anpassen?</div>
+        <div class="faq-answer">Ja, wir passen den Chatbot Design und die Antworten genau auf deine Bedürfnisse an.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Wie läuft die Bezahlung ab?</div>
+        <div class="faq-answer">Du kannst entweder einmalig 449 € zahlen oder monatlich 50 € – je nachdem, was besser zu dir passt.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Kann ich den Chatbot mehrsprachig nutzen?</div>
+        <div class="faq-answer">Ja, auf Wunsch programmieren wir ihn mehrsprachig – Standard ist Deutsch, weitere Sprachen möglich.</div>
+      </div>
+    </section>
+
+   
+  </main>
+
+  <footer>
+    &copy; 2025 Kundenhelfer 24/7 | <a href="#" id="open-impressum-footer" style="color:#f7dede;">Impressum</a> | <a href="#" id="open-agb-footer" style="color:#f7dede;">AGB</a> | <a href="#" id="open-datenschutz-footer" style="color:#f7dede;">Datenschutz</a>
+  </footer>
+
+  <!-- Kontaktformular Modal -->
+  <div id="kontakt-modal" role="dialog" aria-modal="true" aria-labelledby="kontakt-title">
+    <div class="modal-content">
+      <button class="close-btn" aria-label="Schließen">&times;</button>
+      <h3 id="kontakt-title">Chatbot bestellen</h3>
+      <form id="kontakt-form">
+        <label for="name">Name*</label>
+        <input id="name" name="name" type="text" required placeholder="Dein Name" />
+
+        <label for="email">E-Mail*</label>
+        <input id="email" name="email" type="email" required placeholder="Deine E-Mail" />
+
+        <label for="nachricht">Deine Nachricht</label>
+        <textarea id="nachricht" name="nachricht" rows="4" placeholder="z.B. Welches Angebot interessiert dich?"></textarea>
+
+        <button type="submit" class="submit-btn">Anfrage senden</button>
+      </form>
+      <div id="form-message" role="alert" style="margin-top:15px; font-weight: 600; color: green; display:none;">Vielen Dank! Wir melden uns bald bei dir.</div>
+    </div>
+  </div>
+
+  <!-- Impressum / AGB / Datenschutz Modal -->
+  <div id="modal-info" class="modal-info" role="dialog" aria-modal="true" aria-labelledby="modal-info-title">
+    <div class="content">
+      <button class="close-btn" aria-label="Schließen">&times;</button>
+      <h3 id="modal-info-title">Info</h3>
+      <div id="modal-info-text">
+        <!-- Text wird per JS eingefügt -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // FAQ Toggle
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      question.addEventListener('click', () => {
+        const isOpen = answer.classList.contains('open');
+        document.querySelectorAll('.faq-answer.open').forEach(openAns => {
+          openAns.classList.remove('open');
+        });
+        if (!isOpen) {
+          answer.classList.add('open');
+        }
+      });
+    });
+
+    // Modal Kontaktformular
+    const kontaktModal = document.getElementById('kontakt-modal');
+    const openKontaktBtn = document.getElementById('open-kontakt');
+    const closeKontaktBtn = kontaktModal.querySelector('.close-btn');
+    const kontaktForm = document.getElementById('kontakt-form');
+    const formMessage = document.getElementById('form-message');
+
+    openKontaktBtn.addEventListener('click', () => {
+      kontaktModal.classList.add('active');
+      kontaktForm.style.display = 'block';
+      formMessage.style.display = 'none';
+      kontaktForm.reset();
+      kontaktModal.querySelector('input#name').focus();
+    });
+    closeKontaktBtn.addEventListener('click', () => kontaktModal.classList.remove('active'));
+    kontaktModal.addEventListener('click', (e) => {
+      if (e.target === kontaktModal) kontaktModal.classList.remove('active');
+    });
+
+    // Formular senden (Fake / Demo)
+    kontaktForm.addEventListener('submit', e => {
+      e.preventDefault();
+      // Hier könntest du API, Email-Service o.Ä. ansprechen
+      kontaktForm.style.display = 'none';
+      formMessage.style.display = 'block';
+    });
+
+    // Angebote anklickbar öffnen Kontaktformular mit Angebotstext
+    document.querySelectorAll('#angebote .angebot-card').forEach(card => {
+      card.addEventListener('click', () => {
+        openKontaktBtn.click();
+        const angebotName = card.querySelector('h3').textContent;
+        kontaktForm.querySelector('textarea').value = `Ich interessiere mich für: ${angebotName}`;
+      });
+    });
+
+    // Impressum / AGB / Datenschutz Modal
+    const modalInfo = document.getElementById('modal-info');
+    const modalContent = modalInfo.querySelector('#modal-info-text');
+    const modalTitle = modalInfo.querySelector('#modal-info-title');
+    const closeModalBtn = modalInfo.querySelector('.close-btn');
+
+    // Inhalte (Kurz und rechtlich bitte noch anpassen bei Bedarf)
+    const infos = {
+      impressum: {
+        title: 'Impressum',
+        text: `
+          <p><strong>Kundenhelfer 24/7</strong><br />
+          Musterstraße 123<br />
+          12345 Musterstadt<br />
+          Deutschland</p>
+          <p>Telefon: 01234 567890<br />
+          E-Mail: kontakt@kundenhelfer.de</p>
+          <p>Inhaber: Max Mustermann</p>
+          <p>Umsatzsteuer-ID: DE123456789</p>
+        `
+      },
+      agb: {
+        title: 'Allgemeine Geschäftsbedingungen (AGB)',
+        text: `
+          <p>1. Vertragsgegenstand<br />Unsere AI-Chatbots werden individuell programmiert und bereitgestellt.</p>
+          <p>2. Zahlungsbedingungen<br />Einmalzahlung oder monatliches Abonnement möglich.</p>
+          <p>3. Kündigung<br />Monatliche Verträge können jederzeit zum Monatsende gekündigt werden.</p>
+          <p>4. Haftung<br />Wir haften nicht für Schäden durch unsachgemäße Nutzung.</p>
+        `
+      },
+      datenschutz: {
+        title: 'Datenschutzerklärung',
+        text: `
+          <p>Wir nehmen den Schutz deiner Daten sehr ernst. Alle persönlichen Daten werden ausschließlich zur Bearbeitung deiner Anfrage verwendet und nicht an Dritte weitergegeben.</p>
+          <p>Bei Fragen zur Datenverarbeitung kontaktiere uns bitte unter kontakt@kundenhelfer.de.</p>
+        `
+      }
+    };
+
+    function openModal(type) {
+      modalInfo.classList.add('active');
+      modalTitle.innerHTML = infos[type].title;
+      modalContent.innerHTML = infos[type].text;
+    }
+    document.getElementById('open-impressum').addEventListener('click', e => { e.preventDefault(); openModal('impressum'); });
+    document.getElementById('open-agb').addEventListener('click', e => { e.preventDefault(); openModal('agb'); });
+    document.getElementById('open-datenschutz').addEventListener('click', e => { e.preventDefault(); openModal('datenschutz'); });
+    document.getElementById('open-impressum-footer').addEventListener('click', e => { e.preventDefault(); openModal('impressum'); });
+    document.getElementById('open-agb-footer').addEventListener('click', e => { e.preventDefault(); openModal('agb'); });
+    document.getElementById('open-datenschutz-footer').addEventListener('click', e => { e.preventDefault(); openModal('datenschutz'); });
+
+    closeModalBtn.addEventListener('click', () => modalInfo.classList.remove('active'));
+    modalInfo.addEventListener('click', e => {
+      if (e.target === modalInfo) modalInfo.classList.remove('active');
+    });
+  </script>
+</body>
+</html>
